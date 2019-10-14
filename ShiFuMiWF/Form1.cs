@@ -79,12 +79,16 @@ namespace ShiFuMiWF
 
             {
                 choixIA = ((choix)rnd.Next(0, 3));
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+                player.SoundLocation = "shifumi.wav";
+                
                 labelIA.Text = "";
                 await Task.Delay(700);
+                player.Play();
                 labelIA.Text = "SHI";
-                await Task.Delay(700);
+                await Task.Delay(600);
                 labelIA.Text = "FU";
-                await Task.Delay(700);
+                await Task.Delay(600);
                 labelIA.Text = "MI";
                 await Task.Delay(400);
                 labelIA.Text = "";
@@ -93,6 +97,7 @@ namespace ShiFuMiWF
                 if (choixIA == choix.feuille) labelIA.Image = feuilleImage;
                 if (choixIA == choix.ciseaux) labelIA.Image = ciseauxImage;
                 CalculerResultat();
+                
                 await Task.Delay(2500);
                 if (ScoreJoueur < ScoreMax && ScoreIA < ScoreMax) LancerJeu();
                 else FinDePartie();
@@ -122,6 +127,7 @@ namespace ShiFuMiWF
                 ScoreIA++;
                 labelScoreIA.Text = ScoreIA.ToString();
             }
+            ResetButtons();
         }
 
         private void win()
@@ -144,7 +150,7 @@ namespace ShiFuMiWF
             if (ScoreJoueur > ScoreIA)
             {
                 FormLogin frmLogin = new FormLogin(this);
-                frmLogin.newGame = $"Vous avez gagné \n{ScoreJoueur} à {ScoreIA}, recommencer ?";
+                frmLogin.newGame = $"Vous avez gagné {ScoreJoueur} à {ScoreIA} \nrecommencer ?";
                 frmLogin.ShowDialog();
                 ResetAll();
             }
@@ -152,7 +158,7 @@ namespace ShiFuMiWF
             if (ScoreJoueur < ScoreIA)
             {
                 FormLogin frmLogin = new FormLogin(this);                
-                frmLogin.newGame = $"Vous avez perdu \n{ScoreJoueur} à {ScoreIA}, recommencer ?";
+                frmLogin.newGame = $"Vous avez perdu {ScoreJoueur} à {ScoreIA} \nrecommencer ?";
                 frmLogin.ShowDialog();
                 ResetAll();
             }
@@ -169,6 +175,14 @@ namespace ShiFuMiWF
             labelIA.Image = null;
             labelIA.Text = "Choisissez !";
             labelVicDef.Text = "";
+            ResetButtons();
+        }
+
+        private void ResetButtons()
+        {
+            btnPierre.FlatStyle = FlatStyle.Flat;
+            btnFeuille.FlatStyle = FlatStyle.Flat;
+            btnCiseaux.FlatStyle = FlatStyle.Flat;
         }
     }
 }

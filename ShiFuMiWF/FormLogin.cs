@@ -46,5 +46,10 @@ namespace ShiFuMiWF
         {
             Application.Exit();
         }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
